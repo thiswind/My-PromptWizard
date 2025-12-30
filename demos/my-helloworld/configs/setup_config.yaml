@@ -1,0 +1,23 @@
+# PromptWizard Hello World 示例设置配置文件
+
+assistant_llm:
+  # 使用的模型ID（需要在 llm_config.yaml 中定义，或使用环境变量中的模型）
+  prompt_opt: gpt-4o
+
+dir_info:
+  # 基础目录
+  base_dir: logs
+  # 日志目录名称
+  log_dir_name: glue_logs
+
+# 实验名称
+experiment_name: my-helloworld
+
+# 运行模式：offline 或 online
+# offline: 日志输出到控制台
+# online: 使用 LLM Queue
+mode: offline
+
+# 实验描述（可选）
+description: "PromptWizard Hello World 示例 - 场景1：无训练数据，无示例"
+

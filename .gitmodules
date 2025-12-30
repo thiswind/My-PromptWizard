@@ -1,0 +1,3 @@
+[submodule "cursor-agent-team"]
+	path = cursor-agent-team
+	url = https://github.com/thiswind/cursor-agent-team.git

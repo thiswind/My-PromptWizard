@@ -1,0 +1,63 @@
+# PromptWizard Hello World 示例配置文件
+# 这是优化后的配置，减少了迭代次数以加快运行速度
+
+# 提示词优化技术名称
+prompt_technique_name: "critique_n_refine"
+
+# 模型ID（需要在 llm_config.yaml 中定义，或使用环境变量中的模型）
+unique_model_id: gpt-4o
+
+# 优化迭代次数（已优化：从3减少到1，加快运行）
+mutate_refine_iterations: 1
+
+# 变异轮数（已优化：从5减少到1，加快运行）
+mutation_rounds: 1
+
+# 是否在变异后优化指令
+refine_instruction: true
+
+# 任务描述和示例优化的迭代次数
+refine_task_eg_iterations: 3
+
+# 每次迭代生成的提示词变体数量
+style_variation: 5
+
+# 训练时每批问题数量
+questions_batch_size: 1
+
+# 提示词被认为表现良好所需的最小正确回答数
+min_correct_count: 3
+
+# 评估提示词的最大批次数量
+max_eval_batches: 6
+
+# 每次迭代中考虑的最佳提示词数量
+top_n: 1
+
+# 任务描述
+task_description: "You are a mathematics expert. You will be given a mathematics problem which you need to solve"
+
+# 基础指令
+base_instruction: "Lets think step by step."
+
+# 答案格式说明
+answer_format: "For each question present the reasoning followed by the correct answer."
+
+# 训练数据大小（场景1不使用，但保留配置）
+seen_set_size: 25
+
+# Few-shot 示例数量（场景1不使用，但保留配置）
+few_shot_count: 5
+
+# 生成的合成训练示例数量（场景1不使用，但保留配置）
+num_train_examples: 20
+
+# 是否生成推理过程
+generate_reasoning: true
+
+# 是否生成专家身份描述
+generate_expert_identity: true
+
+# 是否生成意图关键词
+generate_intent_keywords: false
+
