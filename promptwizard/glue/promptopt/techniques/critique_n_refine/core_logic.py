@@ -488,6 +488,11 @@ class CritiqueNRefine(PromptOptimizer, UniversalBaseClass):
                     prompt_index = 1
                     print("\nOptimization Finished...")
                     print("\nPossible prompt variations:")
+                    
+                    # 保存第一个变体作为返回值
+                    first_variation_prompt = None
+                    first_variation_expert = None
+                    
                     for candidate in candidate_prompts[:params.mutation_rounds]:
                         final_best_prompt = self.prompt_pool.final_prompt.format(
                         instruction=candidate,
@@ -504,8 +509,19 @@ class CritiqueNRefine(PromptOptimizer, UniversalBaseClass):
                         final_best_prompt += "Keywords: " + intent_keywords
                         print("_______________________________________________________________________")
                         print("\nVariations "+str(prompt_index)+":\nExpert Profile:\n"+expert_identity+":\nPrompt:\n"+final_best_prompt)
+                        
+                        # 保存第一个变体
+                        if prompt_index == 1:
+                            first_variation_prompt = final_best_prompt
+                            first_variation_expert = expert_identity
+                        
                         prompt_index += 1
-                    return "",""
+                    
+                    # 返回第一个变体（如果生成了的话）
+                    if first_variation_prompt and first_variation_expert:
+                        return first_variation_prompt, first_variation_expert
+                    else:
+                        return "",""
                 prompt_score_list = self.get_prompt_score(candidate_prompts, params)
                 prompt_score_list = self.select_top_prompts(prompt_score_list, params.top_n,resolve_tie_criteria)
 

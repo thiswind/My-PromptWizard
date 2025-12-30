@@ -10,6 +10,7 @@ PromptWizard Hello World 示例
 5. 查看结果
 
 场景：无训练数据，无示例 - 仅优化提示词指令
+任务：中文文本摘要
 
 使用方法：
     1. 确保已激活 conda 环境：conda activate base
@@ -37,7 +38,8 @@ def main():
     print("=" * 70)
     print("PromptWizard Hello World 示例")
     print("=" * 70)
-    print("\n这个示例演示如何使用 PromptWizard 优化提示词（场景1：无训练数据）\n")
+    print("\n这个示例演示如何使用 PromptWizard 优化提示词（场景1：无训练数据）")
+    print("任务：中文文本摘要\n")
     
     # ============================================================
     # 步骤 1: 加载环境变量

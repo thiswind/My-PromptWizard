@@ -7,11 +7,11 @@ prompt_technique_name: "critique_n_refine"
 # 模型ID（需要在 llm_config.yaml 中定义，或使用环境变量中的模型）
 unique_model_id: gpt-4o
 
-# 优化迭代次数（已优化：从3减少到1，加快运行）
-mutate_refine_iterations: 1
+# 优化迭代次数（调整为2，确保有足够的优化过程）
+mutate_refine_iterations: 2
 
-# 变异轮数（已优化：从5减少到1，加快运行）
-mutation_rounds: 1
+# 变异轮数（调整为2，生成更多变体）
+mutation_rounds: 2
 
 # 是否在变异后优化指令
 refine_instruction: true
@@ -34,14 +34,14 @@ max_eval_batches: 6
 # 每次迭代中考虑的最佳提示词数量
 top_n: 1
 
-# 任务描述
-task_description: "You are a mathematics expert. You will be given a mathematics problem which you need to solve"
+# 任务描述（中文文本摘要任务）
+task_description: "你是一个文本摘要专家。你需要将给定的文本总结成简洁的摘要。"
 
-# 基础指令
-base_instruction: "Lets think step by step."
+# 基础指令（中文）
+base_instruction: "请仔细阅读文本，提取关键信息，生成简洁准确的摘要。"
 
-# 答案格式说明
-answer_format: "For each question present the reasoning followed by the correct answer."
+# 答案格式说明（中文）
+answer_format: "请先说明你的摘要思路，然后提供最终的摘要。"
 
 # 训练数据大小（场景1不使用，但保留配置）
 seen_set_size: 25
