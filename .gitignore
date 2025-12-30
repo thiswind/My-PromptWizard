@@ -399,3 +399,6 @@ FodyWeavers.xsd
 my.env
 *.env
 .env
+
+# Python package build info
+*.egg-info/
