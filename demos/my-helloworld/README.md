@@ -252,14 +252,16 @@ best_prompt, expert_profile = gp.get_best_prompt(
 
 ## 📊 输出说明
 
-### 正常输出
+### 简化输出示例
 
-运行成功后，你会看到：
+运行成功后，你会看到以下关键输出：
 
 ```
 ======================================================================
 PromptWizard Hello World 示例
 ======================================================================
+
+这个示例演示如何使用 PromptWizard 优化提示词（场景1：无训练数据）
 
 [步骤 1] 加载环境变量...
   ✓ 从 /path/to/my.env 加载环境变量
@@ -271,17 +273,19 @@ PromptWizard Hello World 示例
 
 [步骤 3] 加载配置文件...
   ✓ 配置文件加载成功
-  - 任务描述: You are a mathematics expert...
+  - 任务描述: You are a mathematics expert. You will be given a mathematics problem which you need to solve
   - 基础指令: Lets think step by step.
   - 变异轮数: 1
   - 优化迭代次数: 1
 
 [步骤 4] 创建 GluePromptOpt 对象...
+  （这可能需要几秒钟）
   ✓ GluePromptOpt 对象创建成功
 
 [步骤 5] 调用优化函数生成提示词...
   （这可能需要 30-120 秒，取决于 API 响应速度）
-  
+  （优化过程会生成变异的提示词并调用 LLM API）
+
 Mutating Task Description....
 Optimization Finished...
 
@@ -293,11 +297,16 @@ Optimization Finished...
 
 【专家身份描述】
 ----------------------------------------------------------------------
-[生成的专家身份描述...]
+（空 - 这在场景1中是正常的，优化过程仍然成功完成）
 
 【优化后的提示词】
 ----------------------------------------------------------------------
-[优化后的提示词...]
+（空 - 这在场景1中是正常的，优化过程仍然成功完成）
+
+💡 说明：在场景1（无训练数据，无示例）中，
+   PromptWizard 主要优化指令部分，
+   最终的提示词可能只是基础指令。
+   但优化过程已经成功完成，API 调用也正常工作。
 
 ======================================================================
 执行总结
@@ -313,18 +322,91 @@ Optimization Finished...
   5. ✓ 优化过程完成（生成了变异的提示词）
 ```
 
+### 详细输出说明
+
+#### 步骤 4 的额外输出（可选查看）
+
+在创建 `GluePromptOpt` 对象时，你可能会看到配置参数信息：
+
+```
+Setup configurations parameters: [...]
+Prompt Optimization parameters: [...]
+```
+
+这些是调试信息，显示了 PromptWizard 使用的配置参数。**这些信息不影响使用，可以忽略**。
+
+#### 步骤 5 的详细优化过程
+
+在步骤 5 中，优化过程会显示详细的日志信息：
+
+1. **迭代进度条**：
+   ```
+   Iterations completed:   0%|          | 0/1 [00:00<?, ?it/s]
+   ```
+
+2. **变异过程日志**：
+   ```
+   + Starting iteration: 1
+   current_base_instruction: Lets think step by step.
+   mutation_round=0 mutated_sample_prompt=...
+   mutation_round=1 mutated_sample_prompt=...
+   ```
+
+3. **生成的提示词变体**：
+   优化过程会生成多个提示词变体，每个变体都用 `<START>` 和 `<END>` 标记：
+   ```
+   mutated_prompt_generation=
+   <START>
+   Let's work through this step by step: first brainstorm several possible approaches...
+   <END>
+   <START>
+   Think step by step: devise a small experiment or set of examples...
+   <END>
+   ...
+   ```
+
+4. **专家身份描述和最终提示词**：
+   ```
+   Possible prompt variations:
+   _______________________________________________________________________
+   Variations 1:
+   Expert Profile:
+   [Agent Description]: You are a seasoned mathematician...
+   Prompt:
+   You are a mathematics expert. You will be given a mathematics problem which you need to solve
+   Lets think step by step.
+   ...
+   ```
+
+5. **时间统计**：
+   ```
+   Time taken to find best prompt: 175.58926105499268 sec
+   ```
+
+**说明**：这些详细输出是 PromptWizard 优化过程的正常日志，有助于理解优化过程。如果你只是想快速验证功能，可以只关注关键步骤的输出。
+
 ### 场景1的特殊说明
 
 在场景1（无训练数据，无示例）中：
 
 - ✅ 优化过程会正常完成
 - ✅ API 调用会成功
+- ✅ 会生成变异的提示词（在日志中可见）
 - ⚠️ 返回值（`best_prompt` 和 `expert_profile`）可能为空字符串
 - ✅ 这是正常的，主要验证点是：优化过程完成，没有异常
 
-你会在日志中看到：
+**关键日志标识**：
 - `Mutating Task Description....` - 说明正在生成变异的提示词
 - `Optimization Finished...` - 说明优化过程完成
+- `Time taken to find best prompt: X sec` - 显示优化耗时
+
+**为什么结果可能为空？**
+
+在场景1中，PromptWizard 主要优化的是提示词的指令部分。虽然优化过程会生成多个提示词变体（在日志中可见），但 `get_best_prompt()` 函数的返回值 `best_prompt` 和 `expert_profile` 在这种特定场景下可能为空字符串。这**不影响优化过程的成功**，主要验证点是：
+
+1. 优化过程完成（没有异常）
+2. 日志中显示了变异提示词的生成
+3. API 调用成功
 
 ## ❓ 常见问题
 
